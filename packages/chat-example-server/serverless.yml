@@ -1,4 +1,4 @@
-service: graphql-server-demo # NOTE: update this with your service name
+service: ash-graphql-server-upgrade # NOTE: update this with your service name
 
 custom:
   serverless-offline:

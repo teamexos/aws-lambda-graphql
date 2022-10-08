@@ -3455,18 +3455,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
+"@types/react@*", "@types/react@16.9.11", "@types/react@16.9.43":
   version "16.9.43"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.43.tgz#c287f23f6189666ee3bebc2eb8d0f84bcb6cdb6b"
   integrity sha512-PxshAFcnJqIWYpJbLPriClH53Z2WlJcVZE+NP2etUtWQs2s7yIMj3/LDKZT/5CHJ/F62iyjVCDu2H3jHEXIxSg==
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
-
-"@types/react@16.9.11":
-  version "16.9.11"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.11.tgz#70e0b7ad79058a7842f25ccf2999807076ada120"
-  integrity sha512-UBT4GZ3PokTXSWmdgC/GeCGEJXE5ofWyibCcecRLUVN2ZBpXQGVgQGtG2foS7CrTKFKlQVVswLvf7Js6XA/CVQ==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -4733,9 +4725,16 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-"aws-lambda-graphql@link:../aws-lambda-graphql":
-  version "0.0.0"
-  uid ""
+aws-lambda-graphql@ashramsey/lambda-graphql:
+  version "1.0.0-alpha.24"
+  resolved "git+ssh://git@github.com/ashramsey/lambda-graphql.git#86cba2aff56e675315beeed0eddef2e8aa7b1562"
+  dependencies:
+    "@types/aws-lambda" "^8.10.36"
+    "@types/ioredis" "^4.16.6"
+    apollo-server-core "^2.9.14"
+    apollo-server-lambda "^2.9.14"
+    iterall "^1.2.2"
+    ulid "^2.3.0"
 
 aws-sdk@2.238.1:
   version "2.238.1"
