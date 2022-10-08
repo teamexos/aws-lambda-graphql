@@ -1,7 +1,6 @@
 import { createComponent } from '@napred/browser';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { useMutation } from 'react-apollo';
 
 const sendMessageMutation = gql`
   mutation SendMessageMutation($message: String!) {

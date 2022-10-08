@@ -1,6 +1,5 @@
-import gql from 'graphql-tag';
 import React, { useEffect, useCallback, useRef, useState } from 'react';
-import { OnSubscriptionDataOptions, useSubscription } from 'react-apollo';
+import { gql, OnSubscriptionDataOptions, useSubscription } from '@apollo/client';
 import { Box } from './Box';
 import { Message } from './Message';
 
@@ -35,7 +34,7 @@ function Messages() {
   );
   const listRef = useRef<HTMLDivElement>(null);
 
-  useSubscription(messageFeedSubscription, { onSubscriptionData });
+  const { data, loading, error } = useSubscription(messageFeedSubscription, { onSubscriptionData });
 
   useEffect(() => {
     // scroll down
@@ -44,6 +43,13 @@ function Messages() {
     }
   });
 
+  useEffect(() => {
+    console.log('data', data)
+  }, [data])
+
+  if (loading) return <h1>{'Loading'}</h1>
+  if (error) console.log('error:', error)
+  if (error) return <h1>{'useSubscription error'}</h1>
   return (
     <Box height="100%" mb={2} overflow="scroll" ref={listRef}>
       {messages.map((message, i) => (
