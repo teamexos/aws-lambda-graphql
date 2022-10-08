@@ -12,7 +12,7 @@ custom:
     host: localhost
     port: 8000
     # this fixes the problem with missing region
-    region: eu-central-1
+    region: ap-southeast-2
     pollForever: true
     streams:
       - table: Events
@@ -21,8 +21,10 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs10.x
-  region: eu-central-1 # NOTE: change with your preferred region
+  runtime: nodejs14.x
+  region: ap-southeast-2 # NOTE: change with your preferred region
+  profile: aleign
+  stage: dev
 
   iamRoleStatements:
     - Effect: Allow
