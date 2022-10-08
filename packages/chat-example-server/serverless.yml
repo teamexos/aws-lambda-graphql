@@ -1,6 +1,9 @@
 service: graphql-server-demo # NOTE: update this with your service name
 
 custom:
+  serverless-offline:
+    httpPort: 3003
+    websocketPort: 3001
   dynamodb:
     stages:
       - dev

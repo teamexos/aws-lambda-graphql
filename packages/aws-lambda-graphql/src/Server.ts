@@ -252,6 +252,7 @@ export class Server<
       return new Promise((resolve, reject) => {
         try {
           handler(event, context, (err, result) => {
+            console.log('httpHandler event', event)
             if (err) {
               reject(err);
             } else {
@@ -273,6 +274,7 @@ export class Server<
     context: LambdaContext,
   ) => Promise<APIGatewayProxyResult> {
     return async (event, lambdaContext) => {
+      console.log('WebSocketHandler event', event)
       try {
         // based on routeKey, do actions
         switch (event.requestContext.routeKey) {
