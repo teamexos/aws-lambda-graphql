@@ -40,12 +40,6 @@
     "rimraf": "^3.0.0",
     "typescript": "^3.7.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
     "*.{json,md}": [
       "prettier --write",
