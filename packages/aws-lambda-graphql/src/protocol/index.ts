@@ -32,14 +32,14 @@ export interface GQLOperation {
     query: string | DocumentNode;
     variables?: { [key: string]: any };
   };
-  type: CLIENT_EVENT_TYPES.GQL_START;
+  type: CLIENT_EVENT_TYPES.GQL_SUBSCRIBE;
 }
 
 export function isGQLOperation(event: any): event is GQLOperation {
   return (
     (event &&
       typeof event === 'object' &&
-      event.type === (CLIENT_EVENT_TYPES.GQL_SUBSCRIBE || CLIENT_EVENT_TYPES.GQL_START)
+      event.type === CLIENT_EVENT_TYPES.GQL_SUBSCRIBE
     )
   );
 }

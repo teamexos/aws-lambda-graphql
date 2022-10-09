@@ -379,7 +379,7 @@ describe('Server', () => {
           handler(
             {
               headers: {
-                'Sec-WebSocket-Protocol': 'graphql-ws',
+                'Sec-WebSocket-Protocol': 'graphql-transport-ws',
               },
               requestContext: {
                 connectionId: '1',
@@ -394,7 +394,7 @@ describe('Server', () => {
           expect.objectContaining({
             body: '',
             headers: {
-              'Sec-WebSocket-Protocol': 'graphql-ws',
+              'Sec-WebSocket-Protocol': 'graphql-transport-ws',
             },
             statusCode: 200,
           }),
@@ -670,7 +670,7 @@ describe('Server', () => {
                 }
               `,
             },
-            type: CLIENT_EVENT_TYPES.GQL_START,
+            type: CLIENT_EVENT_TYPES.GQL_SUBSCRIBE,
           }),
           requestContext: {
             connectionId: '1',
@@ -784,7 +784,7 @@ describe('Server', () => {
                     }
                   `,
                 },
-                type: CLIENT_EVENT_TYPES.GQL_START,
+                type: CLIENT_EVENT_TYPES.GQL_SUBSCRIBE,
               }),
               requestContext: {
                 connectionId: '1',
@@ -841,7 +841,7 @@ describe('Server', () => {
                     }
                   `,
                 },
-                type: CLIENT_EVENT_TYPES.GQL_START,
+                type: CLIENT_EVENT_TYPES.GQL_SUBSCRIBE,
               }),
               requestContext: {
                 connectionId: '1',
@@ -900,7 +900,7 @@ describe('Server', () => {
                     text: 'Test this',
                   },
                 },
-                type: CLIENT_EVENT_TYPES.GQL_START,
+                type: CLIENT_EVENT_TYPES.GQL_SUBSCRIBE,
               }),
               requestContext: {
                 connectionId: '1',
@@ -969,7 +969,7 @@ describe('Server', () => {
                     text: 'variable from client',
                   },
                 },
-                type: CLIENT_EVENT_TYPES.GQL_START,
+                type: CLIENT_EVENT_TYPES.GQL_SUBSCRIBE,
               }),
               requestContext: {
                 connectionId: '1',
@@ -1113,7 +1113,7 @@ describe('Server', () => {
                     authorId: 1,
                   },
                 },
-                type: CLIENT_EVENT_TYPES.GQL_START,
+                type: CLIENT_EVENT_TYPES.GQL_SUBSCRIBE,
               }),
               requestContext: {
                 connectionId: '1',
