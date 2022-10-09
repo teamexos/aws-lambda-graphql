@@ -20,7 +20,7 @@
   "scripts": {
     "deploy": "sls deploy",
     "install:dynamodb": "sls dynamodb install",
-    "start": "sls offline start --noPrependStageInUrl",
+    "start": "AWS_SDK_LOAD_CONFIG=1 sls offline start --noPrependStageInUrl",
     "start:dynamodb": "sls dynamodb start"
   }
 }
