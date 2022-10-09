@@ -66,8 +66,7 @@ export class DynamoDBEventProcessor<TServer extends Server = Server>
           continue;
         }
 
-        this.log('Processing event', event);
-        console.log('DynamoDBEventProcessor Processing event', event);
+        if (this.debug) this.log('Processing event', event);
 
         // iterate over subscribers that listen to this event
         // and for each connection:
@@ -86,7 +85,7 @@ export class DynamoDBEventProcessor<TServer extends Server = Server>
               // create PubSub for this subscriber
               const pubSub = new ArrayPubSub([event]);
 
-              const options = await server.createGraphQLServerOptions(
+              const options = await server.createGraphQLServerOptions2(
                 lambdaEvent as any,
                 lambdaContext,
                 {

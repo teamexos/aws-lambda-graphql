@@ -33,15 +33,14 @@
   "dependencies": {
     "@types/aws-lambda": "^8.10.36",
     "@types/ioredis": "^4.16.6",
-    "apollo-server-core": "^2.9.14",
-    "apollo-server-lambda": "^2.9.14",
+    "apollo-server-lambda": "^3.10.3",
+    "graphql-subscriptions": "^2.0.0",
     "iterall": "^1.2.2",
     "ulid": "^2.3.0"
   },
   "peerDependencies": {
     "aws-sdk": "^2.387.0",
-    "graphql": "^14.x || ^15.x",
-    "graphql-subscriptions": "^1.0.0",
+    "graphql": "^15.3",
     "ioredis": "^4.17.3"
   },
   "engines": {
@@ -49,9 +48,9 @@
   },
   "engineStrict": true,
   "devDependencies": {
-    "apollo-link": "^1.2.11",
+    "@types/ws": "^8.5.3",
     "graphql-tag": "^2.10.1",
-    "graphql-tools": "^4.0.6",
+    "graphql-tools": "^8.3.6",
     "graphql-ws": "^5.11.2",
     "mock-socket": "^8.0.5",
     "wait-for-expect": "1.1.0"

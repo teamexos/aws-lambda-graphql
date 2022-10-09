@@ -1,4 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { PubSub } from '../PubSub';
 import { withFilter } from '../withFilter';
 import { IContext } from '../types';
@@ -90,7 +90,7 @@ function createSchema() {
               return ctx.pubSub.subscribe('test')(payload, args, ctx, info);
             },
             (payload, args, ctx) => {
-              const subscriberAuthorId = ctx.authorId
+              const subscriberAuthorId = ctx?.authorId
                 ? ctx.authorId
                 : args.authorId;
               return payload.authorId === subscriberAuthorId;

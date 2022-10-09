@@ -21,7 +21,7 @@ export class MemoryEventProcessor<TServer extends Server = Server>
   implements IEventProcessor<TServer, EventProcessorFn> {
   public createHandler(server: TServer): EventProcessorFn {
     return async function processEvents(events, lambdaContext = {}) {
-      const options = await server.createGraphQLServerOptions(
+      const options = await server.createGraphQLServerOptions2(
         events as any,
         lambdaContext,
       );

@@ -4,6 +4,8 @@ import {
   CreateHandlerOptions,
   GraphQLOptions,
 } from 'apollo-server-lambda';
+import express from 'express';
+import { getCurrentInvoke } from '@vendia/serverless-express';
 import assert from 'assert';
 import {
   APIGatewayProxyResult,
@@ -33,6 +35,7 @@ import {
 } from './protocol';
 import { formatMessage } from './formatMessage';
 import { execute, ExecutionParams } from './execute';
+import { LambdaContextFunctionParams } from 'apollo-server-lambda/dist/ApolloServer';
 
 interface ExtraGraphQLOptions extends GraphQLOptions {
   $$internal: IContext['$$internal'];
@@ -206,7 +209,34 @@ export class Server<
     return this.subscriptionManager;
   }
 
-  public createGraphQLServerOptions(
+  public async createGraphQLServerOptions(
+    req: express.Request,
+    res: express.Response,
+  ): Promise<GraphQLOptions> {
+    const { event, context } = getCurrentInvoke();
+
+    const $$internal: IContext['$$internal'] = {
+      // this provides all other internal params
+      // that are assigned in web socket handler
+      // ...internal,
+      connectionManager: this.connectionManager,
+      subscriptionManager: this.subscriptionManager,
+    };
+
+    const contextParams: any = {
+      event,
+      lambdaContext: context,
+      express: { req, res },
+      $$internal,
+      ...($$internal.connection && $$internal.connection.data
+        ? $$internal.connection.data.context
+        : {}),
+    };
+    return super.graphQLServerOptions(contextParams)
+      .then((options) => ({ ...options, $$internal }));
+  }
+
+  public createGraphQLServerOptions2(
     event: APIGatewayProxyEvent,
     context: LambdaContext,
     internal?: Omit<
@@ -247,7 +277,22 @@ export class Server<
    */
   public createHttpHandler(options?: CreateHandlerOptions) {
     const handler = this.createHandler(options);
-
+    return async function (event: APIGatewayProxyEvent, context: LambdaContext) {
+      try {
+        return await handler(event, context, (err, result) => {
+          console.log('httpHandler event', event)
+          if (err) {
+            console.log('err', err)
+            return err;
+          } else {
+            console.log('result', result)
+            return result
+          }
+        });
+      } catch (e) {
+        console.log('error', e)
+      }
+    }
     return (event: APIGatewayProxyEvent, context: LambdaContext) => {
       return new Promise((resolve, reject) => {
         try {
@@ -346,7 +391,7 @@ export class Server<
             };
           }
           case '$disconnect': {
-            console.log('WebSocketHandler $disconnect event requestContext', event.requestContext)
+            // console.log('WebSocketHandler $disconnect event requestContext', event.requestContext)
             const { onDisconnect } = this.subscriptionOptions || {};
             // this event is called eventually by AWS APIGateway v2
             // we actualy don't care about a result of this operation because client is already
@@ -368,7 +413,7 @@ export class Server<
             };
           }
           case '$default': {
-            console.log('WebSocketHandler $default event requestContext', event.requestContext)
+            // console.log('WebSocketHandler $default event requestContext', event.requestContext)
             // here we are processing messages received from a client
             // if we respond here and the route has integration response assigned
             // it will send the body back to client, so it is easy to respond with operation results
@@ -544,7 +589,7 @@ export class Server<
             // this makes sure that if you invoke the event
             // and you use Context creator function
             // then it'll be called with $$internal context according to spec
-            const options = await this.createGraphQLServerOptions(
+            const options = await this.createGraphQLServerOptions2(
               event,
               lambdaContext,
               {
