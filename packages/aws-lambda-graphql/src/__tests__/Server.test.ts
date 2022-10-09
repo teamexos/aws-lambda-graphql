@@ -1127,7 +1127,7 @@ describe('Server', () => {
         ).resolves.toEqual(
           expect.objectContaining({
             body: expect.stringMatching(
-              /^\{"id":"[A-Z0-9]{26}","payload":\{.+Cannot query field.+\},"type":"data"\}$/,
+              /^\{"id":"[A-Z0-9]{26}","payload":\{.+Cannot query field.+\},"type":"next"\}$/,
             ),
             statusCode: 200,
           }),

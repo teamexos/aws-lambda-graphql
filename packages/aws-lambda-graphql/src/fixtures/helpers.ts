@@ -1,9 +1,8 @@
-import { GraphQLRequest, ExecutionResult } from 'apollo-link';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { Client, SubscribePayload, ExecutionResult } from 'graphql-ws';
 
-export function waitForClientToConnect(client: SubscriptionClient) {
+export function waitForClientToConnect(client: Client) {
   return new Promise((resolve) => {
-    client.onConnected(resolve);
+    client.on('connected', resolve);
   });
 }
 
@@ -13,11 +12,17 @@ export function execute({
   operationName,
   query,
   variables,
-}: { client: SubscriptionClient } & GraphQLRequest): Promise<ExecutionResult> {
+}: { client: Client } & SubscribePayload): Promise<ExecutionResult> {
   return new Promise((resolve, reject) => {
     try {
-      let value;
+      const subscribePayload = {
+        extensions,
+        operationName,
+        query,
+        variables,
+      };
 
+      let value;
       const subscriber = {
         next(val) {
           value = val;
@@ -32,14 +37,7 @@ export function execute({
         },
       };
 
-      client
-        .request({
-          extensions,
-          operationName,
-          query,
-          variables,
-        })
-        .subscribe(subscriber);
+      client.subscribe(subscribePayload, subscriber);
     } catch (e) {
       reject(e);
     }
@@ -52,9 +50,15 @@ export function subscribe({
   operationName,
   query,
   variables,
-}: { client: SubscriptionClient } & GraphQLRequest): Iterator<any> {
-  const events: any[] = [];
+}: { client: Client } & SubscribePayload): Iterator<any> {
+  const subscribePayload = {
+    extensions,
+    operationName,
+    query,
+    variables,
+  };
 
+  const events: any[] = [];
   const subscriber = {
     next(event: any) {
       events.push(event);
@@ -67,14 +71,7 @@ export function subscribe({
     },
   };
 
-  const ob = client
-    .request({
-      extensions,
-      operationName,
-      query,
-      variables,
-    })
-    .subscribe(subscriber);
+  client.subscribe(subscribePayload, subscriber);
 
   return {
     next() {
@@ -88,7 +85,7 @@ export function subscribe({
         return { done: false, value: event };
       }
 
-      ob.unsubscribe();
+      client.dispose();
 
       return { done: true, value: undefined };
     },

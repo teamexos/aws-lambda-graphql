@@ -274,7 +274,6 @@ export class Server<
     context: LambdaContext,
   ) => Promise<APIGatewayProxyResult> {
     return async (event, lambdaContext) => {
-      console.log('WebSocketHandler event', event)
       try {
         // based on routeKey, do actions
         switch (event.requestContext.routeKey) {
@@ -337,16 +336,17 @@ export class Server<
             return {
               body: '',
               headers: event.headers?.['Sec-WebSocket-Protocol']?.includes(
-                'graphql-ws',
+                'graphql-transport-ws',
               )
                 ? {
-                    'Sec-WebSocket-Protocol': 'graphql-ws',
+                    'Sec-WebSocket-Protocol': 'graphql-transport-ws',
                   }
                 : undefined,
               statusCode: 200,
             };
           }
           case '$disconnect': {
+            console.log('WebSocketHandler $disconnect event requestContext', event.requestContext)
             const { onDisconnect } = this.subscriptionOptions || {};
             // this event is called eventually by AWS APIGateway v2
             // we actualy don't care about a result of this operation because client is already
@@ -368,6 +368,7 @@ export class Server<
             };
           }
           case '$default': {
+            console.log('WebSocketHandler $default event requestContext', event.requestContext)
             // here we are processing messages received from a client
             // if we respond here and the route has integration response assigned
             // it will send the body back to client, so it is easy to respond with operation results

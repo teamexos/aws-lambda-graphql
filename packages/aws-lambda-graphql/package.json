@@ -52,8 +52,8 @@
     "apollo-link": "^1.2.11",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.6",
+    "graphql-ws": "^5.11.2",
     "mock-socket": "^8.0.5",
-    "subscriptions-transport-ws": "^0.9.16",
     "wait-for-expect": "1.1.0"
   },
   "scripts": {

@@ -22,7 +22,7 @@ const dynamoDbClient = new DynamoDB.DocumentClient({
 });
 
 const eventStore = new DynamoDBEventStore({ dynamoDbClient });
-const pubSub = new PubSub({ eventStore });
+const pubSub = new PubSub({ eventStore, debug: true });
 const subscriptionManager = new DynamoDBSubscriptionManager({ dynamoDbClient });
 const connectionManager = new DynamoDBConnectionManager({
   // this one is weird but we don't care because you'll use it only if you want to use serverless-offline
@@ -38,6 +38,7 @@ const connectionManager = new DynamoDBConnectionManager({
     : undefined,
   dynamoDbClient,
   subscriptions: subscriptionManager,
+  debug: true,
 });
 
 type MessageType = 'greeting' | 'test';
@@ -124,9 +125,11 @@ const server = new Server({
         playground: {
           subscriptionEndpoint: 'ws://localhost:3001',
         },
+        subscriptions: { connectionEndpoint: 'ws://localhost:3001' },
       }
     : {}),
   typeDefs,
+  debug: true
 });
 
 export const handleHttp = server.createHttpHandler();
