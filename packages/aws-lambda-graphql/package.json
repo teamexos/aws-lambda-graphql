@@ -1,14 +1,14 @@
 {
-  "name": "aws-lambda-graphql",
-  "version": "1.0.0-alpha.24",
+  "name": "aws-lambda-graphql-apollo-v3",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/michalkvasnicak/aws-lambda-graphql/issues"
+    "url": "https://github.com/ashramsey/aws-lambda-graphql/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/michalkvasnicak/aws-lambda-graphql"
+    "url": "https://github.com/ashramsey/aws-lambda-graphql"
   },
   "sideEffects": false,
   "keywords": [
