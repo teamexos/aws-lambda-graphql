@@ -6,6 +6,7 @@ export enum CLIENT_EVENT_TYPES {
   GQL_STOP = 'stop',
   GQL_CONNECTION_INIT = 'connection_init',
   GQL_CONNECTION_TERMINATE = 'connection_terminate',
+  GQL_COMPLETE = 'complete',
 }
 
 export enum SERVER_EVENT_TYPES {
@@ -61,7 +62,7 @@ export function isGQLStopOperation(event: any): event is GQLStopOperation {
   return (
     event &&
     typeof event === 'object' &&
-    event.type === CLIENT_EVENT_TYPES.GQL_STOP
+    [CLIENT_EVENT_TYPES.GQL_STOP, CLIENT_EVENT_TYPES.GQL_COMPLETE].includes(event.type)
   );
 }
 
